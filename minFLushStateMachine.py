@@ -29,5 +29,7 @@ sm = flushController()
 sm.start()
 
 while True:
+	print 'readLight: ', readLight()
+	print 'buttonState: ', buttonState()
 	print sm.step([buttonState(),readLight()])
-	sleep(1)
+	sleep(0.5)
