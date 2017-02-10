@@ -11,7 +11,7 @@ CS   = 25
 mcp = Adafruit_MCP3008.MCP3008(clk=CLK, cs=CS, miso=MISO, mosi=MOSI)
 
 
-def readLight(sensorNum = 0):
+def readLight(sensorNum = 7):
 	return mcp.read_adc(sensorNum)
 
 
