@@ -10,7 +10,14 @@ MOSI = 24
 CS   = 25
 mcp = Adafruit_MCP3008.MCP3008(clk=CLK, cs=CS, miso=MISO, mosi=MOSI)
 
-while True:
-	print mcp.read_adc(0)
-	print mcp.read_adc(1)
+
+def readLight(sensorNum = 0):
+	return mcp.read_adc(sensorNum)
+
+
+
+if __name__ == '__main__':
+	while True:
+		print mcp.read_adc(0)
+		print mcp.read_adc(1)
 
