@@ -12,7 +12,7 @@ GPIO.output(valvePin, GPIO.LOW)
 
 try:
 	counter = 0
-    while 1:
+    while True:
     	if counter%2==0:
     		GPIO.output(valvePin, GPIO.LOW)
     	else:
