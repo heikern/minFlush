@@ -10,6 +10,17 @@ GPIO.setup(valvePin, GPIO.OUT)
 GPIO.output(valvePin, GPIO.LOW)
 
 
+
+def setValve(state='close'):
+	if state == 'close':
+		GPIO.output(valvePin, GPIO.HIGH)
+	elif state == 'open':
+		GPIO.output(valvePin, GPIO.LOW)
+	else:
+		GPIO.output(valvePin, GPIO.HIGH)
+
+
+
 try:
     counter = 0
     while True:
