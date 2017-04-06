@@ -1,0 +1,23 @@
+import RPi.GPIO as GPIO
+from time import time
+
+valvePin = 22
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(valvePin, GPIO.OUT)
+
+# initialise
+GPIO.output(valvePin, GPIO.LOW)
+
+
+try:
+	counter = 0
+    while 1:
+    	if counter%2==0:
+    		GPIO.output(valvePin, GPIO.LOW)
+    	else:
+    		GPIO.output(valvePin, GPIO.HIGH)
+    	time.sleep(1)
+        
+except KeyboardInterrupt:
+    GPIO.cleanup() # cleanup all GPIO
