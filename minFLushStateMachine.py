@@ -6,6 +6,7 @@ import lightSensorInput
 from lightSensorInput import readLight
 from FlushButtonInput import buttonState
 from valveControl import setValve
+from lightControl import changeLightState
 
 # inp includes
 # 0: the state of button press
@@ -14,6 +15,8 @@ class flushController(sm.SM):
 	startState = 'waiting'
 	def getNextValues(self,state,inp):
 		if state == 'waiting':
+			changeLightState(0,'off')
+			changeLightState(1,'off')
 			if inp[0] == True:
 				setValve('open')
 				return ('flushing','Imma Flushing')
@@ -21,6 +24,8 @@ class flushController(sm.SM):
 				setValve('close')
 				return ('waiting','Imma waiting')
 		elif state == 'flushing':
+			changeLightState(0,'on')
+			changeLightState(1,'on')
 			if inp[1] < 390:
 				setValve('open')
 				return ('flushing','I will still flush')
