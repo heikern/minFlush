@@ -1,26 +1,25 @@
 import RPi.GPIO as GPIO
-GPIO.setmode(GPIO.BCM)
 import time
-from time import time
+from time import time, sleep, ctime
 
-import lightSensorInput
+
+GPIO.setmode(GPIO.BCM)
+#import lightSensorInput
 from lightSensorInput import readLight
+print 'lightSensor Imported'
 from FlushButtonInput import buttonState
+print 'Button Initialised'
 from valveControl import setValve
+print 'valve Control online'
+#import lightControl
+#print 'lights activated'
 from lightControl import changeLightState
-from minFlushStateMachine import flushController
+print 'lights activated'
+from minFLushStateMachine import flushController
+print 'stateMachine a go'
 import shitPresenceAlgo as sp
-
-
-# pin definition
-# input pin
-switchPin = 21
-#output pin
-lightPin = 26
-# note. relay pin is active low
-relayPin = 22
-# light control pin
-lightControl = 5
+print 'AI alive'
+from PushToFirebase import pushFlushDetail
 
 ###Setup will be done in the individual files.
 # GPIO.setup(switchPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -30,25 +29,36 @@ lightControl = 5
 sm = flushController()
 sm.start()
 
-startFlushTime = 0
+print 'Hello!'
+changeLightState('on')
+sleep(1)
+changeLightState('off')
+print 'there'
+
+FlushDuration = 0
 flushTime = 0
 while True:
 	output = sm.step([buttonState(),sp.shitPresent()])
 	if output == 'waiting':
 		print 'waiting'
 	elif output == 'startFlush':
-		startFlushTime = time()
+		flushTime = time()
 		changeLightState('on')
 		setValve('open')
 		print "startedFlush"
 	elif output == 'flushing':
 		print 'flushing'
 	elif output == 'endFlush':
-		flushTime = time()-startFlushTime
+		flushDuration = time()-flushTime
 		changeLightState('off')
+		print 'time lag'
+		sleep(2)
 		setValve('close')
-		print 'flushing took: ', flushTime
-	time.sleep(0.2)
+		flushTime = ctime(flushTime)
+		print 'flushStartTime: ', flushTime
+		print 'flushing took: ', flushDuration
+		pushFlushDetail(flushTime,round(flushDuration,1))
+	sleep(0.5)
 
 
 

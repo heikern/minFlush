@@ -3,4 +3,5 @@ lightSensThreshold = {
 	1: 400
 }
 
-print lightSensThreshold[1]
+for i in range(0,2):
+    print lightSensThreshold[i]
