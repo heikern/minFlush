@@ -12,8 +12,7 @@ from lightControl import changeLightState
 # 0: the state of button press
 # 1: the output of shitPresence Model
 
-# output includes:
-# flushing, waiting, flushDone
+# output includes
 class flushController(sm.SM):
 	startState = 'waiting'
 	def getNextValues(self,state,inp):
@@ -22,19 +21,19 @@ class flushController(sm.SM):
 			changeLightState(1,'off')
 			if inp[0] == True:
 				setValve('open')
-				return ('flushing','startFlush')
+				return ('flushing','Imma Flushing')
 			elif inp[0] == False:
 				setValve('close')
-				return ('waiting','waiting')
+				return ('waiting','Imma waiting')
 		elif state == 'flushing':
 			changeLightState(0,'on')
 			changeLightState(1,'on')
 			if inp[1] == True:
 				setValve('open')
-				return ('flushing','flushing')
+				return ('flushing','I will still flush')
 			elif inp[1] == False:
 				setValve('close')
-				return ('waiting','endFlush')
+				return ('waiting','I am done flushing')
 
 
 if __name__ == '__main__':
@@ -44,5 +43,5 @@ if __name__ == '__main__':
 	while True:
 		print 'readLight: ', readLight()
 		print 'buttonState: ', buttonState()
-		print sm.step()
+		print sm.step([buttonState(),readLight(7)])
 		sleep(0.5)

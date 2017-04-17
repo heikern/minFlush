@@ -1,22 +1,18 @@
 import RPi.GPIO as GPIO
 import time
 
-lightPin = [5,6]
+lightPin = 21
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(lightPin[0], GPIO.OUT)
-GPIO.setup(lightPin[1], GPIO.OUT)
+# GPIO.setmode(GPIO.BCM)
+GPIO.setup(lightPin, GPIO.OUT)
+GPIO.output(lightPin, GPIO.LOW)
 
-
-GPIO.output(lightPin[0], GPIO.LOW)
-GPIO.output(lightPin[1], GPIO.LOW)
-
-def changeLightState(pin,state):
+def changeLightState(state):
 	if state == 'off':
-		GPIO.output(lightPin[pin], GPIO.LOW)
+		GPIO.output(lightPin, GPIO.LOW)
 	elif state == 'on':
-		GPIO.output(lightPin[pin], GPIO.HIGH)
+		GPIO.output(lightPin, GPIO.HIGH)
 	else:
-		GPIO.output(pin, GPIO.LOW)
+		GPIO.output(lightPin, GPIO.LOW)
 		print 'error in state'
 
