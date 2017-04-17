@@ -37,29 +37,33 @@ print 'there'
 
 FlushDuration = 0
 flushTime = 0
-while True:
-	output = sm.step([buttonState(),sp.shitPresent()])
-	if output == 'waiting':
-		print 'waiting'
-	elif output == 'startFlush':
-		flushTime = time()
-		changeLightState('on')
-		setValve('open')
-		print "startedFlush"
-	elif output == 'flushing':
-		print 'flushing'
-	elif output == 'endFlush':
-		flushDuration = time()-flushTime
-		changeLightState('off')
-		print 'time lag'
-		sleep(2)
-		setValve('close')
-		flushTime = ctime(flushTime)
-		print 'flushStartTime: ', flushTime
-		print 'flushing took: ', flushDuration
-		pushFlushDetail(flushTime,round(flushDuration,1))
-	sleep(0.5)
-
+try:
+	while True:
+		output = sm.step([buttonState(),sp.shitPresent()])
+		if output == 'waiting':
+			print 'waiting'
+		elif output == 'startFlush':
+			flushTime = time()
+			#changeLightState('on')
+			setValve('open')
+			print "startedFlush"
+		elif output == 'flushing':
+			print 'flushing'
+		elif output == 'endFlush':
+			flushDuration = time()-flushTime
+			changeLightState('off')
+			print 'time lag'
+			sleep(2)
+			setValve('close')
+			flushTime = ctime(flushTime)
+			print 'flushStartTime: ', flushTime
+			print 'flushing took: ', flushDuration
+			pushFlushDetail(flushTime,round(flushDuration,1))
+		sleep(0.5)
+except KeyboardInterrupt:
+	setValve('close')
+	changeLightState('off')
+	GPIO.cleanup()
 
 
 

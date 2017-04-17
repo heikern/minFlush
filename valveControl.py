@@ -7,15 +7,17 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(valvePin, GPIO.OUT)
 
 # initialise
+# when GPIO.HIGH, it actually pulls the relay
+# to ground. That means GPIO.HIGH = Valve Open
 GPIO.output(valvePin, GPIO.LOW)
 
 
 
 def setValve(state='close'):
 	if state == 'close':
-		GPIO.output(valvePin, GPIO.HIGH)
-	elif state == 'open':
 		GPIO.output(valvePin, GPIO.LOW)
+	elif state == 'open':
+		GPIO.output(valvePin, GPIO.HIGH)
 	else:
 		GPIO.output(valvePin, GPIO.HIGH)
 
