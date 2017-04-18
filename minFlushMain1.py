@@ -44,7 +44,7 @@ try:
 			print 'waiting'
 		elif output == 'startFlush':
 			flushTime = time()
-			#changeLightState('on')
+			changeLightState('on')
 			setValve('open')
 			print "startedFlush"
 		elif output == 'flushing':
@@ -53,7 +53,7 @@ try:
 			flushDuration = time()-flushTime
 			changeLightState('off')
 			print 'time lag'
-			sleep(2)
+			sleep(1.5)
 			setValve('close')
 			flushTime = ctime(flushTime)
 			print 'flushStartTime: ', flushTime

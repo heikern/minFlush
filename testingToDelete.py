@@ -1,7 +1,17 @@
-lightSensThreshold = {
-	0: 400,
-	1: 400
-}
+import RPi.GPIO as GPIO
+import time
 
-for i in range(0,2):
-    print lightSensThreshold[i]
+lightPin = 21
+
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(lightPin, GPIO.OUT)
+GPIO.output(lightPin, GPIO.HIGH)
+
+while True:
+    time.sleep(2)
+    GPIO.output(lightPin, GPIO.HIGH)
+    print 'GPIO LOW'
+    time.sleep(2)
+    GPIO.output(lightPin, GPIO.LOW)
+    print 'GPIO HIGH'
